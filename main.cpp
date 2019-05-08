@@ -11,10 +11,14 @@ int main() {
     vec::vector<int> v2(5);
     vec::vector<int> v3{ 5, 10, 20, 8, 8, 9 };
 
+    v3.pop_back();
+    v3.insert(2,4);
+    v3.insert(2,3,6);
+    for(auto i : v3) cout << i << endl;
     /*v.assign(3,20);
     cout << v[2] << endl;*/
     /*v.assign(3,20);
-    for(auto i : v){
+    for(auto i : v3){
         cout << i << endl;
     }*/
     /*cout << v3.begin() << endl;

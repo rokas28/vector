@@ -56,6 +56,7 @@ namespace vec{
         }
 
         int size() const { return n; }
+
        void resize(int sz) {
             if (sz <= cap) return;
             T* new_arr = new T[sz];
@@ -75,7 +76,7 @@ namespace vec{
         }
 
         reference operator[](int i){
-            if (i < 0 || size() <= i)  cout << "Error: you are out of array" << endl;
+            if (i < 0 || size() <= i) cout << "Error: you are out of array" << endl;
             return elem[i];
         }
 
@@ -99,13 +100,37 @@ namespace vec{
         }
         iterator end() {
             if (n == 0) cout << "empty vector" << endl;
-            return elem + n;
+            auto a = elem + n; // - 1
+            return a;
         }
 
         void push_back(double x) {
             if (n >= cap) resize(2 * cap);
             elem[n] = x;
             n++;
+        }
+
+        void pop_back() {
+            if (!n)
+                return;
+            else
+                n--;
+        }
+
+        void insert(int i, double x) {
+            insert(i, 1, x);
+        }
+
+        void insert(int i, int b, double x) {
+            if (i < 0 || i > n) std::out_of_range("range error");
+            for(int a = 0; a < b; a++){
+                push_back(0);
+                for(int j = n - 1; j > i; j--) {
+                    elem[j] = elem[j - 1];
+                }
+                elem[i] = x;
+                i++;
+            }
         }
     };
 }
