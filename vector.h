@@ -3,7 +3,18 @@
 
 #include <algorithm>
 #include <stdexcept>
+
 namespace vec{
+
+    template < typename T >
+    class vector;
+
+    template < typename T >
+    bool operator== (const vector <T>&, const vector <T>&);
+
+    template < typename T >
+    bool operator!= (const vector <T>&, const vector <T>&);
+
     template <typename T >
     class vector {
     private:
@@ -13,8 +24,9 @@ namespace vec{
     public:
         typedef T *iterator;
         typedef T &reference;
+        typedef T &const_reference;
 
-        vector() : n{ 0 },elem{ new T[1] }, cap{ 1 } {};
+        vector() : n{ 0 },elem{ new T[1] }, cap{ 0 } {};
         vector(size_t n, T val) : n{ n }, elem{ new T[n] }, cap{ n } { std::fill_n(elem, n, val); }
         vector(size_t n) : n{ n }, elem{ new T[n] }, cap{ n } {};
         vector(std::initializer_list<T> il)
@@ -57,7 +69,7 @@ namespace vec{
 
         int size() const { return n; }
 
-       void resize(int sz) {
+       void resize(size_t sz) {
             if (sz <= cap) return;
             T* new_arr = new T[sz];
             for(int i = 0; i < cap; ++i) {
@@ -75,7 +87,16 @@ namespace vec{
             else return false;
         }
 
+        void reserve(size_t a){
+            resize(a);
+        }
+
         reference operator[](int i){
+            if (i < 0 || size() <= i) cout << "Error: you are out of array" << endl;
+            return elem[i];
+        }
+
+        const_reference operator[](int i)const{
             if (i < 0 || size() <= i) cout << "Error: you are out of array" << endl;
             return elem[i];
         }
@@ -105,9 +126,16 @@ namespace vec{
         }
 
         void push_back(double x) {
-            if (n >= cap) resize(2 * cap);
+            if (n >= cap) resize(2 * n);
             elem[n] = x;
             n++;
+        }
+
+        void push_front(double x) {
+            if (n >= cap) resize(2 * n);
+            n++;
+            std::move(&elem[0], &elem[n-1], &elem[1]);
+            elem[0] = x;
         }
 
         void pop_back() {
@@ -132,7 +160,44 @@ namespace vec{
                 i++;
             }
         }
+
+        T* insert(iterator it, const T & a) {
+            if (it > elem + n) cout << "Error: you are out of array" << endl;
+           // if (n >= cap) resize(2 * n);
+            n++;
+            std::move(it, it + n, it + 1);
+            *it = a;
+            return it;
+        }
+
+        void erase(int i){
+            if (i < 0 || size() <= i)  {
+                cout << "Error: you are out of array" << endl;
+                return;
+            }
+            std::move(&elem[i+1], &elem[n], &elem[i]);
+            n--;
+        }
+
+        friend bool operator== <T> (const vector <T>& left, const vector <T>& right);
+        friend bool operator!= <T> (const vector <T>& left, const vector <T>& right);
+
     };
+
+    template < typename T >
+    bool operator== (const vector <T>& left, const vector <T>& right) {
+        if (left.n != right.n)return false;
+        else
+            for (int i = 0; i < left.n; ++i)
+                if (left[i] != right[i])return false;
+        return true;
+    }
+
+    template < typename T >
+    bool operator!= (const vector <T>& left, const vector <T>& right) {
+        return !(left == right);
+    }
+
 }
 
 
