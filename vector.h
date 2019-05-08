@@ -2,7 +2,6 @@
 #define VECTOR_VECTOR_H
 
 #include <algorithm>
-#include <stdexcept>
 
 namespace vec{
 
@@ -91,6 +90,15 @@ namespace vec{
             resize(a);
         }
 
+        void shrink_to_fit(){
+            if(n == cap) return;
+            T* new_arr = new T[n];
+            std::move(&elem[0], &elem[n], new_arr);
+            cap = n;
+            delete[] elem;
+            elem = new_arr;
+        }
+
         reference operator[](int i){
             if (i < 0 || size() <= i) cout << "Error: you are out of array" << endl;
             return elem[i];
@@ -115,11 +123,15 @@ namespace vec{
             return elem[n-1];
         }
 
-        iterator begin() {
+        T* data(){
+            return elem;
+        }
+
+        T* begin() {
             if (n == 0) cout << "empty vector" << endl;
             return elem;
         }
-        iterator end() {
+        T* end() {
             if (n == 0) cout << "empty vector" << endl;
             auto a = elem + n; // - 1
             return a;
@@ -177,6 +189,12 @@ namespace vec{
             }
             std::move(&elem[i+1], &elem[n], &elem[i]);
             n--;
+        }
+
+        void clear() {
+            n = 0;
+            delete[] elem;
+            elem = new T[cap];
         }
 
         friend bool operator== <T> (const vector <T>& left, const vector <T>& right);

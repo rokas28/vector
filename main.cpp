@@ -11,8 +11,17 @@ int main() {
     vec::vector<int> v2(5);
     vec::vector<int> v3{ 5, 10, 20, 8, 8, 9 };
 
-    if (v1==v3) cout << "lygus" << endl;
-    if (v1!=v3) cout << "nelygus" << endl;
+    /*v3.reserve(20);
+    cout << v3.capacity() << endl;
+    v3.shrink_to_fit();
+    cout << v3.capacity() << endl;
+    for(int i =0; i < v3.size(); i++) cout << v3[i] << endl;*/
+    /*for(int i =0; i < v3.size(); i++) cout << v3[i] << endl;
+    v3.clear();
+    for(int i =0; i < v3.size(); i++) cout << v3[i] << endl;
+    cout << v3.capacity() << endl;*/
+    /*if (v1==v3) cout << "lygus" << endl;
+    if (v1!=v3) cout << "nelygus" << endl;*/
     /*v3.erase(3);
     for(int i =0; i < v3.size(); i++) cout << v3[i] << endl;*/
     /*v1.push_front(5);
