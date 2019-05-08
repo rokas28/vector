@@ -24,6 +24,37 @@ namespace vec{
             std::copy(il.begin(), il.end(), elem);
         }
         ~vector() { delete[] elem; };
+
+        vector& operator= (const vector& v){
+            if(&v == this) return *this;
+            T *p = new T[v.n];
+            for(int i = 0; i != v.n; i++) p[i] = v.elem[i];
+            delete[] elem;
+            elem = p;
+            n = v.n;
+            return *this;
+        }
+
+        vector& operator= (const vector&& v){
+            if(&v == this) return *this;
+            delete[] elem;
+            elem = v.elem;
+            n = v.n;
+            v.elem = nullptr;
+            v.n = 0;
+            return *this;
+        }
+
+        void assign(size_t count, const T& val) {
+            assign(0, count, val);
+        }
+
+        void assign(size_t first, size_t last, const T& val) {
+            n = last;
+            for (size_t i = first; (i < last) && (i < n); i++)
+                elem[i] = val;
+        }
+
         int size() const { return n; }
        void resize(int sz) {
             if (sz <= cap) return;
@@ -36,17 +67,45 @@ namespace vec{
             elem = new_arr;
         }
 
+        int capacity() const { return cap; }
+
+        bool empty(){
+            if (n!=0) return true;
+            else return false;
+        }
+
         reference operator[](int i){
-            if (i < 0 || size() <= i) throw std::out_of_range {"Vector::operator[]"};
+            if (i < 0 || size() <= i)  cout << "Error: you are out of array" << endl;
             return elem[i];
         }
 
-        int capacity() const { return cap; }
+        T& at(size_t pos) {
+            if ((pos < 0) || (pos >= n)) {
+                cout << "Error: you are out of array" << endl;
+                exit(1);
+            }
+            return elem[pos];
+        }
+        T& front() const {
+            return elem[0];
+        }
+        T& back() const {
+            return elem[n-1];
+        }
+
+        iterator begin() {
+            if (n == 0) cout << "empty vector" << endl;
+            return elem;
+        }
+        iterator end() {
+            if (n == 0) cout << "empty vector" << endl;
+            return elem + n;
+        }
 
         void push_back(double x) {
             if (n >= cap) resize(2 * cap);
             elem[n] = x;
-            ++n;
+            n++;
         }
     };
 }
