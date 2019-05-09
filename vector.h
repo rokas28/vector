@@ -79,6 +79,10 @@ namespace vec{
        void resize(size_t sz) {
             if (sz <= cap) return;
             T* new_arr = new T[sz];
+            if(sz < n){
+                cap = sz;
+                n = sz;
+            }
             for(int i = 0; i < cap; ++i) {
                 new_arr[i] = elem[i];
             }
@@ -257,6 +261,22 @@ namespace vec{
                 n--;
                 first++;
             }
+        }
+
+        void swap(vector<T> & v){
+            vector<T> a;
+            a.elem = new T[v.n];
+            a.n = v.n;
+            a.n = v.cap;
+            std::move(v.begin(), v.end(), a.begin());
+            v.elem = new T[n];
+            v.n = n;
+            v.cap = cap;
+            std::move(&elem[0], &elem[n], v.begin());
+            elem = new T[a.n];
+            n = a.n;
+            cap = a.cap;
+            std::move(a.begin(), a.end(), elem);
         }
 
         void clear() {
