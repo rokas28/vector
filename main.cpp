@@ -1,8 +1,4 @@
-#include <iostream>
-#include "vector.h"
-
-using std::cout;
-using std::endl;
+#include "main.h"
 
 int main() {
 

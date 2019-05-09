@@ -1,7 +1,7 @@
 #ifndef VECTOR_VECTOR_H
 #define VECTOR_VECTOR_H
 
-#include <algorithm>
+#include "main.h"
 
 namespace vec{
 
@@ -22,6 +22,7 @@ namespace vec{
         size_t n;
     public:
         typedef T *iterator;
+        typedef T *const_iterator;
         typedef T &reference;
         typedef T &const_reference;
 
@@ -133,7 +134,17 @@ namespace vec{
         }
         T* end() {
             if (n == 0) cout << "empty vector" << endl;
-            auto a = elem + n; // - 1
+            auto a = elem + n;
+            return a;
+        }
+
+        const_iterator cbegin()const {
+            if (n == 0) cout << "empty vector" << endl;
+            return elem;
+        }
+        const_iterator cend()const {
+            if (n == 0) cout << "empty vector" << endl;
+            auto a = elem + n;
             return a;
         }
 
