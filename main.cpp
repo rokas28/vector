@@ -5,10 +5,13 @@ int main() {
     vec::vector<int> v;
     vec::vector<int> v1(3,10);
     vec::vector<int> v2(5);
-    vec::vector<int> v3{ 5, 10, 20, 8, 8, 9 };
+    vec::vector<int> v3{ 5, 10, 20, 8, 8, 9, 5, 4, 10};
     cout << "vector" << endl;
 
-
+    auto it = v3.begin();
+    v3.erase(it+1,it+4);
+    for(auto i : v3) cout << i << " ";
+    cout << endl;
     /*auto it = v3.begin();
     v3.insert(it,{5,2,3,6,8,9,8,7});
     for(auto i : v3) cout << i << " ";

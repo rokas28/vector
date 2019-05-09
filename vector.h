@@ -237,13 +237,26 @@ namespace vec{
             std::move(il.begin(), il.end(), pos);
         }
 
-        void erase(int i){
-            if (i < 0 || size() <= i)  {
+        void erase(iterator pos){
+            if (pos > elem + n)  {
                 cout << "Error: you are out of array" << endl;
                 return;
             }
-            std::move(&elem[i+1], &elem[n], &elem[i]);
+            std::move(pos + 1, pos + n, pos);
             n--;
+        }
+
+        void erase(iterator first, iterator last){
+            if ((first > elem + n)||(last > elem + n)) {
+                cout << "Error: you are out of array" << endl;
+                return;
+            }
+            std::move(last + 1, last + n, first);
+            n--;
+            while(first!=last){
+                n--;
+                first++;
+            }
         }
 
         void clear() {
