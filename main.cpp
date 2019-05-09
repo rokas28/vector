@@ -3,10 +3,24 @@
 int main() {
 
     vec::vector<int> v;
-    vec::vector<int> v1(3, 10);
+    vec::vector<int> v1(3,10);
     vec::vector<int> v2(5);
     vec::vector<int> v3{ 5, 10, 20, 8, 8, 9 };
+    cout << "vector" << endl;
 
+
+    /*auto it = v3.begin();
+    v3.insert(it,{5,2,3,6,8,9,8,7});
+    for(auto i : v3) cout << i << " ";
+    cout << endl;*/
+    /*it = v3.begin();
+    v3.insert(it+2,66);
+    for(auto i : v3) cout << i << " ";
+    cout << endl;
+    cout << v3.size() << " " << v3.capacity() << endl;
+    cout << "-" << endl;*/
+    /*v.assign({5,2,3,6,8,9,8,7});
+    for(auto i : v) cout << i << endl;*/
     /*v3.reserve(20);
     cout << v3.capacity() << endl;
     v3.shrink_to_fit();
@@ -33,7 +47,7 @@ int main() {
     /*v.assign(3,20);
     cout << v[2] << endl;*/
     /*v.assign(3,20);
-    for(auto i : v3){
+    for(auto i : v){
         cout << i << endl;
     }*/
     /*cout << v3.begin() << endl;

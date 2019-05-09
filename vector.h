@@ -67,6 +67,13 @@ namespace vec{
                 elem[i] = val;
         }
 
+        void assign(std::initializer_list<T> il){
+            n = static_cast<std::size_t>(il.size());
+            cap = static_cast<std::size_t>(il.size());
+            elem = new T[il.size()];
+            std::move(il.begin(), il.end(), elem);
+        }
+
         int size() const { return n; }
 
        void resize(size_t sz) {
@@ -82,7 +89,7 @@ namespace vec{
 
         int capacity() const { return cap; }
 
-        bool empty(){
+        bool empty()const noexcept{
             if (n!=0) return true;
             else return false;
         }
@@ -100,7 +107,7 @@ namespace vec{
             elem = new_arr;
         }
 
-        reference operator[](int i){
+        T& operator[](int i){
             if (i < 0 || size() <= i) cout << "Error: you are out of array" << endl;
             return elem[i];
         }
@@ -117,22 +124,52 @@ namespace vec{
             }
             return elem[pos];
         }
-        T& front() const {
+
+        const_reference at(size_t pos)const {
+            if ((pos < 0) || (pos >= n)) {
+                cout << "Error: you are out of array" << endl;
+                exit(1);
+            }
+            return elem[pos];
+        }
+
+        T& front() {
             return elem[0];
         }
-        T& back() const {
+
+        const_reference front() const {
+            return elem[0];
+        }
+
+        T& back() {
             return elem[n-1];
         }
 
-        T* data(){
-            return elem;
+        const_reference back() const {
+            return elem[n-1];
         }
+
+       /* T* data() noexcept{
+            return elem;
+        }*/
 
         T* begin() {
             if (n == 0) cout << "empty vector" << endl;
             return elem;
         }
+
+        const_iterator begin()const {
+            if (n == 0) cout << "empty vector" << endl;
+            return elem;
+        }
+
         T* end() {
+            if (n == 0) cout << "empty vector" << endl;
+            auto a = elem + n;
+            return a;
+        }
+
+        const_iterator end()const {
             if (n == 0) cout << "empty vector" << endl;
             auto a = elem + n;
             return a;
@@ -168,29 +205,36 @@ namespace vec{
                 n--;
         }
 
-        void insert(int i, double x) {
-            insert(i, 1, x);
+        T* insert(iterator pos, const T & a) {
+            insert(pos, 1, a);
+            return pos;
         }
 
-        void insert(int i, int b, double x) {
-            if (i < 0 || i > n) std::out_of_range("range error");
-            for(int a = 0; a < b; a++){
-                push_back(0);
-                for(int j = n - 1; j > i; j--) {
-                    elem[j] = elem[j - 1];
+        T* insert(iterator pos, size_t b, const T & a) {
+            if (pos > elem + n) cout << "Error: you are out of array" << endl;
+            for(int i = 0; i < b; i++){
+                //auto it = pos;
+                if (n >= cap) {
+                    resize(n * 2);
+                    pos = elem;
+                    //it = elem;
                 }
-                elem[i] = x;
-                i++;
+                n++;
+                std::move(pos, pos + n, pos + 1);
+                *pos = a;
+                pos++;
             }
+            return pos;
         }
 
-        T* insert(iterator it, const T & a) {
-            if (it > elem + n) cout << "Error: you are out of array" << endl;
-           // if (n >= cap) resize(2 * n);
-            n++;
-            std::move(it, it + n, it + 1);
-            *it = a;
-            return it;
+        void insert(iterator pos, std::initializer_list<T> il){
+            if(n+il.size() >= cap){
+                resize(n + il.size() * 2);
+                pos = elem;
+            }
+            std::move(pos, pos + n, pos + il.size());
+            n += il.size();
+            std::move(il.begin(), il.end(), pos);
         }
 
         void erase(int i){
