@@ -20,6 +20,12 @@ namespace vec{
     template < typename T >
     bool operator> (const vector <T>&, const vector <T>&);
 
+    template < typename T >
+    bool operator<= (const vector <T>&, const vector <T>&);
+
+    template < typename T >
+    bool operator>= (const vector <T>&, const vector <T>&);
+
     template <typename T >
     class vector {
     private:
@@ -295,6 +301,8 @@ namespace vec{
         friend bool operator!= <T> (const vector <T>& left, const vector <T>& right);
         friend bool operator< <T> (const vector <T>& left, const vector <T>& right);
         friend bool operator> <T> (const vector <T>& left, const vector <T>& right);
+        friend bool operator<= <T> (const vector <T>& left, const vector <T>& right);
+        friend bool operator>= <T> (const vector <T>& left, const vector <T>& right);
 
     };
 
@@ -338,6 +346,31 @@ namespace vec{
         return !(left < right);
     }
 
+    template < typename T >
+    bool operator<= (const vector <T>& left, const vector <T>& right) {
+
+        if(left.empty() && right.empty()) return true;
+        else if (left.empty()) return true;
+        else if (right.empty()) return false;
+        else {
+            int i = 0;
+            while(left[i]==right[i]){
+                if((i+1 > left.n)||(i+1 > right.n)) break;
+                i++;
+            }
+            if(left[i] < right[i]) return true;
+            else if(left[i] == right[i]){
+                if(left.n < right.n) return true;
+                else return true;
+            }
+            else return false;
+        }
+    }
+
+    template < typename T >
+    bool operator>= (const vector <T>& left, const vector <T>& right) {
+        return !(left <= right);
+    }
 }
 
 
