@@ -15,5 +15,11 @@ int main() {
     if (c<=d) std::cout << "c<=d\n";
     if (c>=d) std::cout << "c>=d\n";
 
+    v1.emplace(v1.begin(),8);
+    v1.emplace_back(5);
+    v1.emplace_front(7);
+    for(auto i : v1)cout << i << " ";
+    cout << endl;
+
     return 0;
 }

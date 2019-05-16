@@ -37,6 +37,8 @@ namespace vec{
         typedef T *const_iterator;
         typedef T &reference;
         typedef T &const_reference;
+        typedef std::reverse_iterator<iterator> reverse_iterator;
+        typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
         vector() : n{ 0 },elem{ new T[1] }, cap{ 0 } {};
         vector(size_t n, T val) : n{ n }, elem{ new T[n] }, cap{ n } { std::fill_n(elem, n, val); }
@@ -123,7 +125,7 @@ namespace vec{
             elem = new_arr;
         }
 
-        T& operator[](int i){
+        reference operator[](int i){
             if (i < 0 || size() <= i) cout << "Error: you are out of array" << endl;
             return elem[i];
         }
@@ -165,9 +167,9 @@ namespace vec{
             return elem[n-1];
         }
 
-       /* T* data() noexcept{
+        T* data() noexcept{
             return elem;
-        }*/
+        }
 
         T* begin() {
             if (n == 0) cout << "empty vector" << endl;
@@ -199,6 +201,22 @@ namespace vec{
             if (n == 0) cout << "empty vector" << endl;
             auto a = elem + n;
             return a;
+        }
+
+        reverse_iterator rbegin() {
+            return reverse_iterator(end());
+        }
+
+        reverse_iterator rend() {
+            return reverse_iterator(begin());
+        }
+
+        const_reverse_iterator crbegin()const {
+            return reverse_iterator(end());
+        }
+
+        const_reverse_iterator crend()const {
+            return reverse_iterator(begin());
         }
 
         void push_back(double x) {
@@ -295,6 +313,17 @@ namespace vec{
             n = 0;
             delete[] elem;
             elem = new T[cap];
+        }
+
+        iterator emplace(iterator it, const T & args) {
+            return insert(it, std::move(args));
+        }
+
+        void emplace_back(const T &args) {
+            return push_back(std::move(args));
+        }
+        void emplace_front(const T &args) {
+            return push_front(std::move(args));
         }
 
         friend bool operator== <T> (const vector <T>& left, const vector <T>& right);
