@@ -25,7 +25,7 @@ vec::vector uztruko 0.163004sec
 std::vector uztruko 1.6131sec
 ```
 Naudojamas laiko matavimo kodas:
-```
+```javascript
 #include "main.h"
 
 int main() {
