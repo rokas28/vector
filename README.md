@@ -61,7 +61,7 @@ vec::vector perskirste kartu: 24
 std::vector perskirste kartu: 41
 ```
 Naudojamas laiko matavimo kodas:
-```
+```javascript
 #include "main.h"
 
 int main() {
@@ -101,6 +101,6 @@ std::vector isvedimas uztruko 2.26464sec
 ```
 ```
 Irasymas i vec::vector uztruko 4.80187sec
-vec::ector rusiavimas uztruko 2.66218sec
-vec::ector isvedimas uztruko 2.12293sec
+vec::vector rusiavimas uztruko 2.66218sec
+vec::vector isvedimas uztruko 2.12293sec
 ```
