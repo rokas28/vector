@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <algorithm>
+#include <vector>
+#include <chrono>
 #include "vector.h"
 
 using std::cout;
