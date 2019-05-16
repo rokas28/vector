@@ -90,19 +90,21 @@ namespace vec{
 
         int size() const { return n; }
 
-       void resize(size_t sz) {
-            if (sz <= cap) return;
+       iterator resize(size_t sz, iterator it = 0) {
+            if (sz <= cap) return it;
             T* new_arr = new T[sz];
             if(sz < n){
                 cap = sz;
                 n = sz;
             }
+           auto pos = it - begin();
             for(int i = 0; i < cap; ++i) {
                 new_arr[i] = elem[i];
             }
             cap = sz;
             delete[] elem;
             elem = new_arr;
+            return begin() + pos;
         }
 
         int capacity() const { return cap; }
@@ -239,36 +241,32 @@ namespace vec{
                 n--;
         }
 
-        T* insert(iterator pos, const T & a) {
+        iterator insert(iterator pos, const T & a) {
             insert(pos, 1, a);
             return pos;
         }
 
-        T* insert(iterator pos, size_t b, const T & a) {
+        iterator insert(iterator pos, size_t b, const T & a) {
             if (pos > elem + n) cout << "Error: you are out of array" << endl;
             for(int i = 0; i < b; i++){
-                //auto it = pos;
                 if (n >= cap) {
-                    resize(n * 2);
-                    pos = elem;
-                    //it = elem;
+                    pos = resize(n * 2,pos);
                 }
                 n++;
                 std::move(pos, pos + n, pos + 1);
                 *pos = a;
-                pos++;
             }
             return pos;
         }
 
-        void insert(iterator pos, std::initializer_list<T> il){
+        iterator insert(iterator pos, std::initializer_list<T> il){
             if(n+il.size() >= cap){
-                resize(n + il.size() * 2);
-                pos = elem;
+                pos = resize(n + il.size() * 2,pos);
             }
             std::move(pos, pos + n, pos + il.size());
             n += il.size();
             std::move(il.begin(), il.end(), pos);
+            return pos;
         }
 
         void erase(iterator pos){

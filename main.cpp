@@ -21,5 +21,11 @@ int main() {
     for(auto i : v1)cout << i << " ";
     cout << endl;
 
+    v3.insert(v3.begin()+3, 5);
+    v3.insert(v3.begin(),2, 77);
+    v3.insert(v3.begin()+6, {100,4,5,200});
+    for(auto i : v3)cout << i << " ";
+    cout << endl;
+
     return 0;
 }
