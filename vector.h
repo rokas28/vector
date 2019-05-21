@@ -2,6 +2,8 @@
 #define VECTOR_VECTOR_H
 
 #include "main.h"
+using std::cout;
+using std::endl;
 
 namespace vec{
 
