@@ -47,5 +47,9 @@ int main() {
     for(auto i : v3)cout << i << " ";
     cout << endl;
 
+    v3.clear();
+    for(auto i : v3)cout << i << " ";
+    cout << endl;
+
     return 0;
 }
